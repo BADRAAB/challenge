@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  selector:
+    app: helloworld  # Sélectionne les Pods avec ce label
+  ports:
+    - protocol: TCP
+      port: 80         # Port exposé à l'intérieur du cluster
+      targetPort: 8000 # Port sur lequel votre application écoute
+      nodePort: 30080  # Port exposé sur chaque nœud du cluster (plage 30000 à 32767)
+  type: NodePort
