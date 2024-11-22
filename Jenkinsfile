@@ -2,17 +2,15 @@ pipeline {
     agent any
 
     environment {
-        // Définir les variables d'environnement
-        KUBECONFIG = '/home/ubuntu/.kube/config'  // Assurez-vous que ce fichier est accessible
-        IMAGE_NAME = 'pedro1993/helloworld_img'   // Nom de l'image Docker
+        IMAGE_NAME = 'pedro1993/helloworld_img'  // Nom de l'image Docker
         DOCKER_CREDENTIALS = 'dockerhub-credentials' // Identifiants Docker Hub
+        HELM_HOME = '/usr/local/bin/helm'  // Si Helm n'est pas dans le PATH
     }
 
     stages {
         stage('Clone repository') {
             steps {
                 script {
-                    // Cloner le dépôt GitHub
                     git clone 'https://github.com/BADRAAB/challenge.git'
                 }
             }
@@ -21,7 +19,6 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    // Construire l'image Docker à partir du Dockerfile
                     sh "docker build -t $IMAGE_NAME:latest ."
                 }
             }
@@ -42,13 +39,11 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Appliquer les fichiers de déploiement Kubernetes et vérifier l'état des pods
-                    sh '''
-                    set -e
-                    kubectl apply -f deployment.yaml
-                    kubectl apply -f service.yaml
-                    kubectl get pods
-                    '''
+                    // Initialiser Helm (si nécessaire)
+                    sh 'helm repo update'
+
+                    // Déployer l'application via Helm
+                    sh "helm upgrade --install ${RELEASE_NAME} ./chart --set image.repository=${IMAGE_NAME} --set image.tag=latest"
                 }
             }
         }

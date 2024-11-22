@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  selector:
+    app: helloworld  # Sélectionne les Pods avec ce label
+  ports:
+    - protocol: TCP
+      port: 80         # Port exposé à l'intérieur du cluster
+      targetPort: 8000 # Port sur lequel votre application écoute
+  type: LoadBalancer  # Utilisation du type LoadBalancer
