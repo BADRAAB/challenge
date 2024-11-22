@@ -12,7 +12,7 @@ pipeline  {
         stage('Clone repository') {
             steps {
                 script {
-                    // Cloner le dépôt GitHub
+
                     git clone 'https://github.com/BADRAAB/challenge.git'
                 }
             }
@@ -22,7 +22,7 @@ pipeline  {
             steps {
                 script {
                     // Construire l'image Docker à partir du Dockerfile
-                    sh "docker build -t $IMAGE_NAME:latest ."
+                    sh "docker build  . -t $IMAGE_NAME:1.3 "
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline  {
             steps {
                 script {
                     // Se connecter à Docker Hub et pousser l'image
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'DOCKERHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u $USERNAME -p $PASSWORD"
                         sh "docker push $IMAGE_NAME"
                     }
