@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     // Se connecter à Docker Hub et pousser l'image
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'DOCKERHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u $USERNAME -p $PASSWORD"
                         sh "docker push $IMAGE_NAME:1.3" // Utilisation de la version 1.3 ici
                     }
