@@ -44,7 +44,7 @@ pipeline {
                     sh "helm version" // Cela peut être utile pour vérifier que Helm est bien installé
 
                     // Déployer l'application via Helm
-                    sh "helm install helloworld . -f values.yaml"
+                     sh "cd chart && helm install helloworld . -f values.yaml"
                 }
             }
         }
