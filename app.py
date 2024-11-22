@@ -9,7 +9,7 @@ def hello_world():
 
 @app.route('/health')
 def health_check():
-    return 'OK', 200  # Retourne un code HTTP 200 avec un message "OK"
+    return 'health check is ok ', 200  # Retourne un code HTTP 200 avec un message "OK"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

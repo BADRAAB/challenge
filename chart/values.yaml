@@ -1,0 +1,13 @@
+replicaCount: 3
+image:
+  repository: pedro1993/helloworld_img
+  tag: 1.2
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8000
+
+containerPort: 8000
+
+
+

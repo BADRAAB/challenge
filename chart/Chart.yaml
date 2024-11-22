@@ -1,0 +1,4 @@
+apiVersion: v2
+name: helloworld
+description: A Helm chart for  hello world deployment
+version: 0.1.0
