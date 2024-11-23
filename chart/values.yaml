@@ -9,5 +9,6 @@ service:
 
 containerPort: 8000
 ingress:
-  host: "helloworld.com"  # Nom de domaine 
+  enabled: true  #  ça permet d'activer Ingress
+  host: "helloworld.com"  # là on peut mettre le nom de domaine 
 
