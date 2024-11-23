@@ -43,7 +43,7 @@ pipeline {
                    
 
                     // Déployer l'application via Helm
-                  sh "cd chart && helm upgrade --install $RELEASE_NAME . -f values.yaml"
+                  sh "cd chart && helm upgrade  $RELEASE_NAME . -f values.yaml"
                 }
             }
         }
