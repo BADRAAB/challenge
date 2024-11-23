@@ -9,5 +9,4 @@ service:
 
 containerPort: 8000
 ingress:
-  enabled: true  # Activer l'Ingress
-  host: "avatar.com"  # Nom de domaine pour l'accès à ton application
+  host: "avatar_medical.com"  # Nom de domaine 
