@@ -11,16 +11,17 @@ pipeline {
         stage('Clone repository') {
             steps {
                 script {
+                    //clone du repo 
                     git 'https://github.com/BADRAAB/challenge.git'
                 }
             }
         }
 
-        stage('Build Docker image') {
+        stage('Build image') {
             steps {
                 script {
-                    // Construire l'image Docker à partir du Dockerfile
-                    sh "docker build . -t $IMAGE_NAME:1.3"
+                    //buils image
+                    sh "docker build . -t $IMAGE_NAME:1.2"
                 }
             }
         }
@@ -28,10 +29,10 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    // Se connecter à Docker Hub et pousser l'image
+                    //acceder à Dockerhub en utilisant les credential mis dans Jenkins puis push l'image
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u $USERNAME -p $PASSWORD"
-                        sh "docker push $IMAGE_NAME:1.3" // Utilisation de la version 1.3 ici
+                        sh "docker push $IMAGE_NAME:1.3" 
                     }
                 }
             }
@@ -42,7 +43,7 @@ pipeline {
                 script {
                    
 
-                    // Déployer l'application via Helm
+                    // Déployer l'application via Helm dans kubernetes
                   sh "cd chart && helm upgrade --install  $RELEASE_NAME . -f values.yaml"
                 }
             }
