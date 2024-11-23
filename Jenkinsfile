@@ -50,18 +50,29 @@ pipeline {
         }
 
         stage('Deploy test') {
-            steps {
-                script {
-                    // Vérifier si le service est bien exposé
-                    sh "kubectl get svc $RELEASE_NAME-service"
+    steps {
+        script {
+            // Vérifier si le service est bien exposé
+            sh "kubectl get svc $RELEASE_NAME-service"
 
-                    // Récupérer l'IP du LoadBalancer
-                     loadBalancerIP = sh(script: "kubectl get svc $RELEASE_NAME-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'", returnStdout: true).trim()
+            // Récupérer l'IP du LoadBalancer (ou le hostname si pas d'IP)
+            def loadBalancerIP = sh(script: "kubectl get svc $RELEASE_NAME-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
 
-                    // Tester la connectivité à l'URL de santé (health check) de ton application
-                    sh "curl http://${loadBalancerIP}:80/health"
-                }
+            // Si l'IP est vide, essayer de récupérer le hostname
+            if (loadBalancerIP == "") {
+                loadBalancerIP = sh(script: "kubectl get svc $RELEASE_NAME-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'", returnStdout: true).trim()
+            }
+
+            // Vérifier si nous avons bien une IP ou un hostname
+            if (loadBalancerIP) {
+                // Tester la connectivité à l'URL de santé (health check) de ton application
+                sh "curl http://${loadBalancerIP}:80/health"
+            } else {
+                error "LoadBalancer IP or hostname not available."
             }
         }
+    }
+}
+
     }
 }
