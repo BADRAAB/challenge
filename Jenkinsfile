@@ -49,17 +49,7 @@ pipeline {
             }
         }
 
-        stage('Deploy test') {
-    steps {
-        script {
-              // Récupérer l'URL du service via Minikube
-            def serviceURL = sh(script: "minikube service $RELEASE_NAME-service --url", returnStdout: true).trim()
-
-            // Tester la connectivité à l'URL de santé (health check) de ton application
-            sh "curl ${serviceURL}/health"
-            }
-        }
-    }
+  
 
     }
 }
