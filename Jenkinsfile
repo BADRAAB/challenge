@@ -58,13 +58,6 @@ pipeline {
                     // Récupérer l'IP du LoadBalancer
                     def loadBalancerIP = sh(script: "kubectl get svc $RELEASE_NAME-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
 
-                    // Vérifier si une IP a été obtenue (attente si nécessaire)
-                    while (!loadBalancerIP) {
-                        echo "Attente de l'IP du LoadBalancer..."
-                        sleep(10) // Attente de 10 secondes avant de réessayer
-                        loadBalancerIP = sh(script: "kubectl get svc $RELEASE_NAME-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
-                    }
-
                     // Tester la connectivité à l'URL de santé (health check) de ton application
                     sh "curl http://${loadBalancerIP}:80/health"
                 }
