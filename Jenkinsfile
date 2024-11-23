@@ -49,17 +49,21 @@ pipeline {
                 }
             }
         }
-        stage('Deploy test') {
-            steps {
-           script {
-            // Récupérer l'URL du service Minikube
-            def serviceUrl = sh(script: "minikube service {{ .Release.Name }}-service --url", returnStdout: true).trim()
+       stage('Deploy test') {
+    steps {
+        script {
+            // Vérifier si le service est bien exposé
+            sh "kubectl get svc {{ .Release.Name }}-service"
 
-            // Teste l'URL sans options de fail ou de silence
-            sh "curl ${serviceUrl}/health"
+            // Récupérer l'IP du LoadBalancer
+            def loadBalancerIP = sh(script: "kubectl get svc {{ .Release.Name }}-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
+
+            // Tester la connectivité à l'URL de santé (health check) de ton application
+            sh "curl  http://${loadBalancerIP}:80/health "
         }
     }
 }
+
 
     }
   }
