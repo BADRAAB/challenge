@@ -40,11 +40,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Initialiser Helm (si nécessaire)
-                    sh "helm version" // Cela peut être utile pour vérifier que Helm est bien installé
+                   
 
                     // Déployer l'application via Helm
-                    sh "cd chart && helm install $RELEASE_NAME . -f values.yaml"
+                  sh "cd chart && helm upgrade --install $RELEASE_NAME . -f values.yaml"
                 }
             }
         }
