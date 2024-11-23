@@ -8,6 +8,6 @@ service:
   targetPort: 8000
 
 containerPort: 8000
-
-
-
+ingress:
+  enabled: true  # Activer l'Ingress
+  host: "avatar.com"  # Nom de domaine pour l'accès à ton application
