@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
+        KUBECONFIG='/var/jenkins_home/.kube/config' //chemin du kubeconfig dans le contneur Jenkins 
         IMAGE_NAME = 'pedro1993/helloworld_img'  // Nom de l'image Docker
-        DOCKER_CREDENTIALS = 'dockerhub-credentials' // Identifiants Docker Hub
+        
     }
 
     stages {
