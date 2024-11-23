@@ -9,4 +9,5 @@ service:
 
 containerPort: 8000
 ingress:
-  host: "avatar_medical.com"  # Nom de domaine 
+  host: "helloworld.com"  # Nom de domaine 
+
