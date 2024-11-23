@@ -18,7 +18,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.containerPort }}
-        # Ajout des probes
+        # Ajout de la partie health check
         readinessProbe:
           httpGet:
             pathl: /health
