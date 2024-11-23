@@ -28,7 +28,7 @@ pipeline {
 
         stage('Push image') {
             steps {
-                script {
+            script {
                     // Se connecter à Docker Hub et pousser l'image
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u $USERNAME -p $PASSWORD"
@@ -49,5 +49,18 @@ pipeline {
                 }
             }
         }
+        stage('Deploy test') {
+            steps {
+           script {
+            // Récupérer l'URL du service Minikube
+            def serviceUrl = sh(script: "minikube service {{ .Release.Name }}-service --url", returnStdout: true).trim()
+
+            // Teste l'URL sans options de fail ou de silence
+            sh "curl ${serviceUrl}/health"
+        }
+    }
+}
+
     }
   }
+    
