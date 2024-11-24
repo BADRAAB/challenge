@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     //build de l'image  docker
-                    sh "docker build . -t $IMAGE_NAME:1.3"
+                    sh "docker build . -t $IMAGE_NAME:1.2"
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                     //acceder à Dockerhub en utilisant les credential ajouté à Jenkins puis push l'image
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u $USERNAME -p $PASSWORD"
-                        sh "docker push $IMAGE_NAME:1.3" 
+                        sh "docker push $IMAGE_NAME:1.2" 
                     }
                 }
             }
