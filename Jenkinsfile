@@ -20,7 +20,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    //buils image
+                    //build de l'image docker
                     sh "docker build . -t $IMAGE_NAME:1.2"
                 }
             }
