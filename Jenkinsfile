@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     //build de l'image  docker
-                    sh "docker build . -t $IMAGE_NAME:1.2"
+                    sh "docker build . -t $IMAGE_NAME:1.3"
                 }
             }
         }
