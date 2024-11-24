@@ -1,9 +1,9 @@
-# Déploiement API Helloword sur Kubernetes
+# Déploiement API Helloword sur un cluster Kubernetes
 
 ## Environnement
 
 - **Docker** : Utilisé pour construire l'image Docker.
-- **Minikube** : Utilisé pour créer un cluster Kubernetes local.
+- **Minikube** : Utilisé pour créer le cluster Kubernetes .
 - **Helm** : Outil de gestion des déploiements Kubernetes.
 - **Jenkins** : Outil d'intégration continue et de déploiement continu (CI/CD), exécuté dans un conteneur Docker.
 - **Flask** : Framework Python utilisé pour développer notre application.

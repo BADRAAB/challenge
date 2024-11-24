@@ -43,7 +43,7 @@ pipeline {
                 script {
                    
 
-                    // Déployer l'application via Helm dans kubernetes
+                    // Déployer l'application via Helm dans le cluster  kubernetes
                   sh "cd chart && helm upgrade --install  $RELEASE_NAME . -f values.yaml"
                 }
             }
